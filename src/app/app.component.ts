@@ -11,7 +11,8 @@ import { LoggedServiceService } from './services/logged-service.service';
 export class AppComponent implements OnInit {
   autenticated=false
   autenticating=false
-  textbeforeAuth="TI AMO 3000"
+  textbeforeAuth=""
+  globalUserName:string=""
   private apiLoaded = false;
   currentVideoId: string | undefined;
   playerConfig = {
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit {
   aiutiAttivi=false
   videoId: string | undefined;
   errorMessageForLogIn=""
+  gotSongs=false
   videoList: Video[] = [
     {
       title: 'versace on the floor',
@@ -55,10 +57,30 @@ export class AppComponent implements OnInit {
   }
   getLoggedStatus(){
     let toRetun=this.loggedService.getLoggedStatus()
+    if(toRetun && !this.gotSongs){
+      this.checkForSongs()
+    }
     return toRetun
   }
+
+  checkForSongs(){
+    this.gotSongs=true
+    this.dbservice.getItem("sentVideos").then((songs)=>{
+     songs.forEach((song:any) => {
+      console.log(song.to,this.globalUserName)
+      if(song.to==this.globalUserName){
+        this.textbeforeAuth=song.secretMessage
+      }
+      
+     });
+     
+    })
+  }
+
+
+
   modifiedletter(position:number,event:any){
-    let correctAnswer="quantocribbiotiamo"
+    let correctAnswer=""
     let currentGuess=""
     for(let i=0;i<18;i++){
       let currentLetter=<HTMLInputElement>document.getElementById((i+1).toString())
@@ -122,6 +144,7 @@ export class AppComponent implements OnInit {
   }
   verifyAuth(userName:string,pass:string,userNameEl:any,passEl:any){
     if(userName && pass){
+      this.globalUserName=userName
       console.log("verifyng")
       this.loggedService.verifyLogIn(userName,pass).then((data:any)=>{
         if(!data.userExist){this.errorMessageForLogIn="username errato!!"} 
