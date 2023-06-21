@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
       if(currentLetter){
         if(currentLetter.value){
           currentGuess+=currentLetter.value.toString()
-         if(this.aiutiAttivi){currentLetter.value==correctAnswer[i]?currentLetter.style.backgroundColor="rgb(44 215 30 / 94%)":currentLetter.style.backgroundColor="white"}
+         if(this.aiutiAttivi){currentLetter.value.toLowerCase()==correctAnswer[i]?currentLetter.style.backgroundColor="rgb(44 215 30 / 94%)":currentLetter.style.backgroundColor="white"}
         }else{
           currentGuess+=" "
         }
