@@ -38,7 +38,6 @@ export class DbServiceService {
     let toreTurn =new Promise((resolve,reject)=>{
       let fullData:any[]=[]
       querySnapshot.forEach((doc) => {
-        console.log(doc.data())
         fullData.push(doc.data())
       });
       resolve(fullData)

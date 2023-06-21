@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Video } from './model/video';
 import { core } from '@angular/compiler';
-import { DbServiceService } from './db-service.service';
+import { DbServiceService } from './services/db-service.service';
+import { LoggedServiceService } from './services/logged-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
   autenticated=false
   autenticating=false
   textbeforeAuth="TI AMO 3000"
@@ -21,13 +21,14 @@ export class AppComponent implements OnInit {
   };
   aiutiAttivi=false
   videoId: string | undefined;
+  errorMessageForLogIn=""
   videoList: Video[] = [
     {
       title: 'versace on the floor',
       link: 'https://www.youtube.com/watch?v=2NOioOsxctQ'
     }
   ];
-  constructor( private dbservice:DbServiceService) { }
+  constructor( private dbservice:DbServiceService,private loggedService:LoggedServiceService) { }
   
   ngOnInit(): void {
     if(!this.apiLoaded) {
@@ -42,9 +43,7 @@ export class AppComponent implements OnInit {
     //   born: 1815
     // }
     // this.dbservice.createItem("users",objToCreate)
-    this.dbservice.getItem("users").then((data)=>{
-      console.log(data)
-    })
+ 
   }
 
   selectVideo(video: Video) {
@@ -53,6 +52,10 @@ export class AppComponent implements OnInit {
     if(currentVid){
       this.videoId=currentVid
     }
+  }
+  getLoggedStatus(){
+    let toRetun=this.loggedService.getLoggedStatus()
+    return toRetun
   }
   modifiedletter(position:number,event:any){
     let correctAnswer="quantocribbiotiamo"
@@ -116,6 +119,21 @@ export class AppComponent implements OnInit {
        
       }
     }
+  }
+  verifyAuth(userName:string,pass:string,userNameEl:any,passEl:any){
+    if(userName && pass){
+      console.log("verifyng")
+      this.loggedService.verifyLogIn(userName,pass).then((data:any)=>{
+        if(!data.userExist){this.errorMessageForLogIn="username errato!!"} 
+        else if(!data.passCorrect){this.errorMessageForLogIn="password errata!!"} else{this.errorMessageForLogIn=""}
+
+      })
+    }else{
+      userNameEl.value=""
+      passEl.value=""
+      console.log("enter Pass")
+    }
+
   }
   checkVideoEnded(ev:any){
     if(ev.data===0){

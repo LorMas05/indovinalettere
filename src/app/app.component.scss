@@ -50,7 +50,7 @@
     background-color: rgba(255, 255, 255, 0.9411764706);
     border: none;
     border-radius: 5px;
-    font-size: 30px;
+    font-size: 18px;
     text-align: center;
     /* border-bottom: 1px solid #1cb0f9; */
     margin: 3px;
@@ -77,4 +77,46 @@
 .autenticating{
     color: white;
     font-size: 40px;
+}
+.authInput{
+    position: absolute;
+    top: 45px;
+    height: 24px;
+    width: 83%;
+    background-color: #bfadc8ab;
+    border: 1px solid #bca8d3;
+    border-radius: 6px;
+}
+.secondTitle{
+    top:80px !important
+}
+.secondInput{
+    top:120px !important
+}
+.authHeight{
+    height: 300px !important;
+    background-color: #cbbd45c4 !important;
+}
+.textContent{
+    color:black !important
+}
+.logInButton{
+    z-index: 10;
+    position: absolute;
+    right: 6%;
+    border-radius: 6px;
+    width: 100px;
+    height: 27px;
+    bottom: 20px;
+    background-color: #c0aba7;
+    border: 1px solid white;
+    color: white;
+    font-size: 17px;
+}
+.errorMessageAuth{
+    color: red;
+    position: absolute;
+    bottom: 26px;
+    left: 12px;
+    font-weight: bold;
 }

@@ -1,5 +1,5 @@
 <div class="header"><h1>Lorola online   ♪♪</h1></div>
-<div class="mainContainer">
+<div class="mainContainer" *ngIf="getLoggedStatus()">
   <div *ngIf="!autenticated" class="beforeAuth">
     <h1 class="textContent">Verifica la tua Carolaggine..</h1>
     <div class="checkContainer">
@@ -40,5 +40,17 @@
   </div>
   <div class="youtubeContainer">
     <youtube-player [width]="300"  [videoId]="videoId"  [playerVars]="playerConfig" (stateChange)="checkVideoEnded($event)"></youtube-player>
+  </div>
+</div>
+
+
+<div class="mainContainer " *ngIf="!getLoggedStatus()">
+  <div  class="beforeAuth authHeight">
+    <h1 class="textContent">Enter username</h1>
+    <input class="authInput" #userName>
+    <h1 class="textContent secondTitle">Enter password</h1>
+    <input class="authInput secondInput" #pass>
+    <button class="logInButton" (click)="verifyAuth(userName.value,pass.value,userName,pass)">Log-in</button>
+    <label class="errorMessageAuth" *ngIf="errorMessageForLogIn.length>0">{{errorMessageForLogIn}}</label>
   </div>
 </div>
