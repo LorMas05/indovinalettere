@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
       let oldLetter=<HTMLInputElement>document.getElementById((position).toString())
       let toFocus=<HTMLInputElement>document.getElementById((position+1).toString())
       if(toFocus && oldLetter.value){
-        toFocus.focus()
+        toFocus.focus() 
       }
     }
 
