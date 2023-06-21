@@ -1,15 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Video } from './model/video';
 import { core } from '@angular/compiler';
-
+import { DbServiceService } from './db-service.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+
   autenticated=false
   autenticating=false
+  textbeforeAuth="TI AMO 3000"
   private apiLoaded = false;
   currentVideoId: string | undefined;
   playerConfig = {
@@ -25,7 +27,7 @@ export class AppComponent implements OnInit {
       link: 'https://www.youtube.com/watch?v=2NOioOsxctQ'
     }
   ];
-  constructor() { }
+  constructor( private dbservice:DbServiceService) { }
   
   ngOnInit(): void {
     if(!this.apiLoaded) {
@@ -34,6 +36,15 @@ export class AppComponent implements OnInit {
       document.body.appendChild(tag);
       this.apiLoaded = true;
     }
+    // let objToCreate={
+    //   first: "Ada",
+    //   last: "Lovelace",
+    //   born: 1815
+    // }
+    // this.dbservice.createItem("users",objToCreate)
+    this.dbservice.getItem("users").then((data)=>{
+      console.log(data)
+    })
   }
 
   selectVideo(video: Video) {
@@ -43,7 +54,7 @@ export class AppComponent implements OnInit {
       this.videoId=currentVid
     }
   }
-  modifiedletter(position:number){
+  modifiedletter(position:number,event:any){
     let correctAnswer="quantocribbiotiamo"
     let currentGuess=""
     for(let i=0;i<18;i++){
@@ -63,22 +74,39 @@ export class AppComponent implements OnInit {
        this.autenticated=true
        this.autenticating=true
        setTimeout(() => {
-        this.autenticating=false
         this.selectVideo(this.videoList[this.getRandomInt(this.videoList.length-1)])
-       }, 1200);
+        this.startTimer(0)
+       }, 2000);
     }
     if(position!=0 && position <18){
+      console.log(event.data)
       let oldLetter=<HTMLInputElement>document.getElementById((position).toString())
       let toFocus=<HTMLInputElement>document.getElementById((position+1).toString())
       if(toFocus && oldLetter.value){
         toFocus.focus()
       }
     }
+
+  }
+
+  startTimer(callNumber:number){
+    this.textbeforeAuth=(3-callNumber).toString()+"..."
+    if(callNumber<3){
+      setTimeout(() => {
+        this.startTimer(callNumber+1)
+      }, 1000);
+    }else{
+      setTimeout(() => {
+        this.autenticating=false
+      }, 700);
+      
+    }
+
   }
   checked(checked:boolean){
     this.aiutiAttivi=checked
     if(this.aiutiAttivi){
-     this.modifiedletter(0) 
+     this.modifiedletter(0,null) 
     }else{
       for(let i=0;i<18;i++){
         let currentLetter=<HTMLInputElement>document.getElementById((i+1).toString())

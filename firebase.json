@@ -1,0 +1,6 @@
+{
+  "firestore": {
+    "rules": "rules.ts",
+    "indexes": "indexes.ts"
+  }
+}

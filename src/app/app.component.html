@@ -7,35 +7,35 @@
       <label for="aiuti">Attiva aiuti</label>
     </div>
     <div class="letterHolder ">
-      <input class="letterINput" (input)="modifiedletter(1)" maxlength="1" id="1">
-      <input class="letterINput" (input)="modifiedletter(2)" maxlength="1" id="2">
-      <input class="letterINput" (input)="modifiedletter(3)" maxlength="1" id="3">
-      <input class="letterINput" (input)="modifiedletter(4)" maxlength="1" id="4">
-      <input class="letterINput" (input)="modifiedletter(5)" maxlength="1" id="5">
-      <input class="letterINput" (input)="modifiedletter(6)" maxlength="1" id="6">
+      <input class="letterINput" (input)="modifiedletter(1,$event)"   maxlength="1" id="1">
+      <input class="letterINput" (input)="modifiedletter(2,$event)"   maxlength="1" id="2">
+      <input class="letterINput" (input)="modifiedletter(3,$event)"   maxlength="1" id="3">
+      <input class="letterINput" (input)="modifiedletter(4,$event)"     maxlength="1" id="4">
+      <input class="letterINput" (input)="modifiedletter(5,$event)"  maxlength="1" id="5">
+      <input class="letterINput" (input)="modifiedletter(6,$event)"   maxlength="1" id="6">
     </div>
     <div class="letterHolder ">
-      <input class="letterINput" (input)="modifiedletter(7)" maxlength="1" id="7">
-      <input class="letterINput" (input)="modifiedletter(8)" maxlength="1" id="8">
-      <input class="letterINput" (input)="modifiedletter(9)" maxlength="1" id="9">
-      <input class="letterINput" (input)="modifiedletter(10)" maxlength="1" id="10">
-      <input class="letterINput" (input)="modifiedletter(11)" maxlength="1" id="11">
-      <input class="letterINput" (input)="modifiedletter(12)" maxlength="1" id="12">
-      <input class="letterINput" (input)="modifiedletter(13)" maxlength="1" id="13">
+      <input class="letterINput" (input)="modifiedletter(7,$event)"    maxlength="1" id="7">
+      <input class="letterINput" (input)="modifiedletter(8,$event)"  maxlength="1" id="8">
+      <input class="letterINput" (input)="modifiedletter(9,$event)"    maxlength="1" id="9">
+      <input class="letterINput" (input)="modifiedletter(10,$event)"  maxlength="1" id="10">
+      <input class="letterINput" (input)="modifiedletter(11,$event)"  maxlength="1" id="11">
+      <input class="letterINput" (input)="modifiedletter(12,$event)"  maxlength="1" id="12">
+      <input class="letterINput" (input)="modifiedletter(13,$event)"  maxlength="1" id="13">
     </div>
     <div class="letterHolder ">
-      <input class="letterINput" (input)="modifiedletter(14)" maxlength="1" id="14">
-      <input class="letterINput" (input)="modifiedletter(15)" maxlength="1" id="15">
+      <input class="letterINput" (input)="modifiedletter(14,$event)"  maxlength="1" id="14">
+      <input class="letterINput" (input)="modifiedletter(15,$event)"  maxlength="1" id="15">
     </div>
     <div class="letterHolder ">
-      <input class="letterINput" (input)="modifiedletter(16)" maxlength="1" id="16">
-      <input class="letterINput" (input)="modifiedletter(17)" maxlength="1" id="17">
-      <input class="letterINput" (input)="modifiedletter(18)" maxlength="1" id="18">
+      <input class="letterINput" (input)="modifiedletter(16,$event)"  maxlength="1" id="16">
+      <input class="letterINput" (input)="modifiedletter(17,$event)"  maxlength="1" id="17">
+      <input class="letterINput" (input)="modifiedletter(18,$event)"  maxlength="1" id="18">
     </div>
 
   </div>
   <div class="beforeAuth autenticating" *ngIf="autenticating">
-    TI AMO 3000
+    {{textbeforeAuth}}
     
   </div>
   <div class="youtubeContainer">
