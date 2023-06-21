@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore"; 
 import { getDocs } from "firebase/firestore"; 
 
@@ -38,12 +38,20 @@ export class DbServiceService {
     let toreTurn =new Promise((resolve,reject)=>{
       let fullData:any[]=[]
       querySnapshot.forEach((doc) => {
-        fullData.push(doc.data())
+        let objToReturn=doc.data()
+        objToReturn['documentId']=doc.id
+        fullData.push(objToReturn)
       });
       resolve(fullData)
     })
     return toreTurn
      
   }
-
+  async setCompleted(collectionName:string,documentId:string):Promise<any>{
+    const washingtonRef = doc(this.db, collectionName, documentId);
+    await updateDoc(washingtonRef, {
+      completed: true
+    });
+     
+  }
 }

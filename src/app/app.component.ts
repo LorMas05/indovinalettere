@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
   autenticating=false
   textbeforeAuth=""
   dedicationDuration=1000
+  songDocumentid:string=""
   dedication=""
   foundSong=false
   separathedFrase:string[]=[]
@@ -72,7 +73,7 @@ export class AppComponent implements OnInit {
     this.gotSongs=true
     this.dbservice.getItem("sentVideos").then((songs)=>{
      songs.forEach((song:any) => {
-      console.log(song.to,this.globalUserName)
+      console.log(song,this.globalUserName)
       if(song.to==this.globalUserName && !song.completed){
         this.foundSong=true
         this.textbeforeAuth=song.secretMessage
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit {
         this.videoList[0].title=song.dedication
         this.dedication=song.dedication
         this.dedicationDuration=song.duration*1000
+        this.songDocumentid=song.documentId
       }
       
      });
@@ -182,7 +184,9 @@ export class AppComponent implements OnInit {
   }
   checkVideoEnded(ev:any){
     if(ev.data===0){
-      this.selectVideo(this.videoList[this.getRandomInt(this.videoList.length-1)])
+      // this.selectVideo(this.videoList[this.getRandomInt(this.videoList.length-1)])
+      console.log("finito")
+      this.dbservice.setCompleted("sentVideos",this.songDocumentid)
     }
   }
    getRandomInt(max:number) {
