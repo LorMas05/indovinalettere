@@ -12,6 +12,10 @@ export class AppComponent implements OnInit {
   autenticated=false
   autenticating=false
   textbeforeAuth=""
+  dedicationDuration=1000
+  dedication=""
+  foundSong=false
+  separathedFrase:string[]=[]
   globalUserName:string=""
   private apiLoaded = false;
   currentVideoId: string | undefined;
@@ -26,8 +30,8 @@ export class AppComponent implements OnInit {
   gotSongs=false
   videoList: Video[] = [
     {
-      title: 'versace on the floor',
-      link: 'https://www.youtube.com/watch?v=2NOioOsxctQ'
+      title: 'noVid',
+      link: 'no video'
     }
   ];
   constructor( private dbservice:DbServiceService,private loggedService:LoggedServiceService) { }
@@ -64,12 +68,19 @@ export class AppComponent implements OnInit {
   }
 
   checkForSongs(){
+    this.foundSong=false
     this.gotSongs=true
     this.dbservice.getItem("sentVideos").then((songs)=>{
      songs.forEach((song:any) => {
       console.log(song.to,this.globalUserName)
-      if(song.to==this.globalUserName){
+      if(song.to==this.globalUserName && !song.completed){
+        this.foundSong=true
         this.textbeforeAuth=song.secretMessage
+        this.separathedFrase=this.textbeforeAuth.split(" ")
+        this.videoList[0].link=song.link
+        this.videoList[0].title=song.dedication
+        this.dedication=song.dedication
+        this.dedicationDuration=song.duration*1000
       }
       
      });
@@ -78,11 +89,22 @@ export class AppComponent implements OnInit {
   }
 
 
-
+  getLetters(word:string){
+    return word.split('')
+  }
+  getIndexToAdd(i:number){
+    if(i>0){
+      let toRetun=this.separathedFrase[i].length
+      return toRetun
+    }else{
+      return 1
+    }
+  }
   modifiedletter(position:number,event:any){
-    let correctAnswer=""
+    let correctAnswer=this.textbeforeAuth.replace(/\s+/g, '');
+    correctAnswer=correctAnswer.toLowerCase()
     let currentGuess=""
-    for(let i=0;i<18;i++){
+    for(let i=0;i<correctAnswer.length;i++){
       let currentLetter=<HTMLInputElement>document.getElementById((i+1).toString())
       if(currentLetter){
         if(currentLetter.value){
@@ -101,7 +123,7 @@ export class AppComponent implements OnInit {
        setTimeout(() => {
         this.selectVideo(this.videoList[this.getRandomInt(this.videoList.length-1)])
         this.startTimer(0)
-       }, 2000);
+       }, this.dedicationDuration);
     }
     if(position!=0 && position <18){
       console.log(event.data)
@@ -115,7 +137,7 @@ export class AppComponent implements OnInit {
   }
 
   startTimer(callNumber:number){
-    this.textbeforeAuth=(3-callNumber).toString()+"..."
+    this.dedication=(3-callNumber).toString()+"..."
     if(callNumber<3){
       setTimeout(() => {
         this.startTimer(callNumber+1)
